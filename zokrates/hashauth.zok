@@ -1,0 +1,9 @@
+from "./merkle_membership_authentication" import verify_membership;
+
+const u32 DEPTH = 3;
+
+def main(u32[8] merkle_tree_root, private u32[8] private_key, private u32[8] public_key, private bool[DEPTH] direction_selector, private u32[DEPTH][8] path) -> bool {
+    bool membership_validity = verify_membership(merkle_tree_root,private_key,public_key,direction_selector,path);
+    
+    return membership_validity;
+}

@@ -1,0 +1,17 @@
+import "hashes/sha256/512bitPadded" as sha256;
+from "./merkle_membership_authentication" import verify_membership;
+
+const u32 DEPTH = 3;
+
+def calculate_nullifier(u32[8] private_key) -> u32[8] {
+    u32[8] mut padded_private_key = [0;8];
+    padded_private_key[7] = 1;
+    return sha256(private_key, padded_private_key);
+}
+
+def main(u32[8] merkle_tree_root, u32[8] nullifier, private u32[8] private_key, private u32[8] public_key, private bool[DEPTH] direction_selector, private u32[DEPTH][8] path) -> bool {
+    bool membership_validity = verify_membership(merkle_tree_root,private_key,public_key,direction_selector,path);
+    bool nullifier_validity = nullifier == calculate_nullifier(private_key);
+    
+    return membership_validity && nullifier_validity;
+}

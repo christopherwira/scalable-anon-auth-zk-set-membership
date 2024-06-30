@@ -1,0 +1,40 @@
+import "hashes/sha256/512bitPadded" as sha256;
+
+const u32 DEPTH = 3;
+
+def select(bool condition, u32[8] left, u32[8] right) -> (u32[8], u32[8]) {
+    return (condition ? right : left, condition ? left : right);
+}
+
+def calculate_merkle_tree_root(u32[8] leaf, bool[DEPTH] direction_selector, u32[DEPTH][8] path) -> u32[8] {
+    u32[8] mut current_digest = leaf;
+    for u32 i in 0..DEPTH {
+	    (u32[8], u32[8]) s = select(direction_selector[i], current_digest, path[i]);
+	    current_digest = sha256(s.0, s.1);
+    }
+    return current_digest;
+}
+
+def main(u32[8] rt, u32[8] sn, u32[8] cm, u32[8] wm,  private u32[8] a_sk, private u32[8] a_pk, private u32[8] rho, private u32[8] r, private u32[8] tm, private u32[8] w, private bool[DEPTH] direction_selector, private u32[DEPTH][8] path) -> bool {
+    u32[8] padding_a_sk = [0;8];
+    u32[8] calculated_a_pk = sha256(a_sk, padding_a_sk);
+    bool a_sk_a_pk_validity = calculated_a_pk == a_pk;
+    
+    u32[8] intermediate_rho_r = sha256(rho, r);
+    u32[8] k = sha256(a_pk, intermediate_rho_r);
+    u32[8] calculated_tm = sha256(cm, k);
+    bool tm_validity = calculated_tm == tm;
+
+    u32[8] calculated_rt = calculate_merkle_tree_root(tm, direction_selector, path);
+    bool rt_validity = calculated_rt == rt;
+
+    u32[8] calculated_sn = sha256(rho, a_sk);
+    bool sn_validity = calculated_sn == sn;
+
+    u32[8] k_prime = sha256(a_sk, w);
+    u32[8] padding_k_prime = [0;8];
+    u32[8] calculated_wm = sha256(k_prime, padding_k_prime);
+    bool wm_validity = calculated_wm == wm;
+
+    return tm_validity && a_sk_a_pk_validity && sn_validity && rt_validity && wm_validity;
+}

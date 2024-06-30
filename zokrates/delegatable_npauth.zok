@@ -1,0 +1,19 @@
+import "hashes/sha256/512bitPadded" as sha256;
+from "./merkle_membership_authentication" import verify_membership;
+
+const u32 DEPTH = 3;
+
+def calculate_digested_value(u32[8] private_key, u32[5] agent_account_address) -> u32[8] {
+    u32[8] mut padded_agent_account_address = [0;8];
+    for u32 i in 0..5 {
+        padded_agent_account_address[i+3] = agent_account_address[i];
+    }
+    return sha256(private_key, padded_agent_account_address);
+}
+
+def main(u32[8] merkle_tree_root, u32[5] agent_account_address, private u32[8] private_key, private u32[8] public_key, private bool[DEPTH] direction_selector, private u32[DEPTH][8] path, private u32[8] digested_value) -> bool {
+    bool membership_validity = verify_membership(merkle_tree_root,private_key,public_key,direction_selector,path);
+    bool agent_validity = digested_value == calculate_digested_value(private_key, agent_account_address);
+    
+    return membership_validity && agent_validity;
+}

@@ -1,0 +1,25 @@
+import "hashes/sha256/512bitPadded" as sha256;
+
+def select(bool condition, u32[8] left, u32[8] right) -> (u32[8], u32[8]) {
+    return (condition ? right : left, condition ? left : right);
+}
+
+def calculate_public_key(u32[8] private_key) -> u32[8] {
+    u32[8] private_key_padding = [0;8];
+    return sha256(private_key,private_key_padding);
+}
+
+def calculate_merkle_tree_root<DEPTH>(u32[8] leaf, bool[DEPTH] direction_selector, u32[DEPTH][8] path) -> u32[8] {
+    u32[8] mut current_digest = leaf;
+    for u32 i in 0..DEPTH {
+	    (u32[8], u32[8]) s = select(direction_selector[i], current_digest, path[i]);
+	    current_digest = sha256(s.0, s.1);
+    }
+    return current_digest;
+}
+
+def verify_membership<DEPTH>(u32[8] merkle_tree_root, u32[8] private_key, u32[8] public_key, bool[DEPTH] direction_selector, u32[DEPTH][8] path) -> bool {
+    u32[8] calculated_public_key = calculate_public_key(private_key);
+    u32[8] calculated_merkle_tree_root = calculate_merkle_tree_root(public_key, direction_selector, path);
+    return calculated_public_key==public_key && calculated_merkle_tree_root==merkle_tree_root;
+}
