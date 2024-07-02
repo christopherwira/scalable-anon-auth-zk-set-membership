@@ -42,6 +42,7 @@ Our implementation requires the following dependencies:
 - Python `3.12` or newer
 - ZoKrates `0.8.7` or newer
 - Hardhat `2.20.1` or newer
+- NodeJS `20.11.1` or newer
 
 We recommend the user to utilize [**Anaconda**](https://www.anaconda.com/) to create the required environment.
 
