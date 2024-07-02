@@ -1,2 +1,43 @@
 # Scalable Anonymous Authentication Scheme Based on Zero-Knowledge Set-Membership Proof
-WIP Readme Files
+
+by Christopher Wiraatmaja, Shoji Kasahara.
+
+This paper extends our previous [work](https://github.com/christopherwira/anon-auth-zkp-set-membership) and submitted at [***ACM: Distributed Ledger Technologies: Research and Practice***](https://dl.acm.org/journal/dlt).
+
+DOI: WIP
+
+>We proposed a novel delegation scheme, called zkNamedProof, which binds the authentication proof to a designated anonymous agent, preventing both privacy and security attacks. Using this technique, we developed a blockchain-based authentication scheme that is cost-efficient and responsive compared to prior works.
+
+We provided our proposed anonymous authentication scheme as follows:
+
+![](desired-authentication-scheme.jpg)
+
+*Our Proposed Authentication Scheme*
+
+Using our proposed technique, our scheme achieved cheaper expected gas cost and competitive time performance to access the devices without sacrificing security or privacy aspects, resulting in better overall scalability. Here are the results of our experiments:
+
+![](authentication-expected-gas-cost.png)
+*Gas Cost Comparison Table*
+
+![](authentication-expected-time-elapsed.png)
+*Time Elapsed Comparison Table*
+
+## Abstract
+
+>In this paper, we propose zero-knowledge named proof, a stateless replay attack prevention strategy that ensures the user's anonymity against malicious administrators. We begin with adopting the zero-knowledge set-membership proof into an authentication setting in which users would delegate their requests to an agent that obstructs the user's identity from the administrator. This anonymous agent carries the guarantee of authenticity, which the administrator through the set-membership proof can confirm. Next, we prevent replay attacks from other parties by binding the agent's identity to the authentication proof verifiable by the administrators. By leveraging these properties, a scalable blockchain-based authentication scheme is then built. We quantitatively evaluate the security and measure the time and monetary cost of our scheme under both ideal and realistic environments. On top of it,  we provide a third-party authorization scheme derived from our authentication framework to demonstrate its real-world applicability.
+
+## Experiment Implementation
+
+> We utilized [ZoKrates](https://zokrates.github.io/) to implement our proposed technique, and deploy the work in a private Ethereum node using [Hardhat](https://hardhat.org/).
+
+## Getting our repository
+
+Please clone this repository using your Git client by running
+
+```
+git clone https://github.com/christopherwira/anon-auth-zkp-set-membership.git
+```
+
+## License
+
+All source code is made available under the terms of the [MIT license](LICENSE.md). 
