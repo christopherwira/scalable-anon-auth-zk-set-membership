@@ -10,7 +10,7 @@ DOI: WIP
 
 We provided our proposed anonymous authentication scheme as follows:
 
-![](desired-authentication-scheme.jpg)
+![](desired-authentication-scheme.png)
 
 *Our Proposed Authentication Scheme*
 
