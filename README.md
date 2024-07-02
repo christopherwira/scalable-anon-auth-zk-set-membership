@@ -35,7 +35,7 @@ Using our proposed technique, our scheme achieved cheaper expected gas cost and 
 Please clone this repository using your Git client by running
 
 ```
-git clone https://github.com/christopherwira/anon-auth-zkp-set-membership.git
+git clone https://github.com/christopherwira/scalable-anon-auth-zk-set-membership.git
 ```
 
 Our implementation requires the following dependencies:
