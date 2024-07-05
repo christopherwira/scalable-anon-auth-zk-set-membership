@@ -4,7 +4,7 @@ by Christopher Wiraatmaja, Shoji Kasahara.
 
 This paper extends our previous [work](https://github.com/christopherwira/anon-auth-zkp-set-membership) and submitted at [***ACM: Distributed Ledger Technologies: Research and Practice***](https://dl.acm.org/journal/dlt).
 
-DOI: WIP
+DOI: [10.1145/3676285](https://doi.org/10.1145/3676285)
 
 >We proposed a novel delegation scheme, called zkNamedProof, which binds the authentication proof to a designated anonymous agent, preventing both privacy and security attacks. Using this technique, we developed a blockchain-based authentication scheme that is cost-efficient and responsive compared to prior works.
 
